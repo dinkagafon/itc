@@ -10,11 +10,11 @@
 
 </body>
 <script>
-  plus = (a, b) => a+b
+  plus = (a, b) => a + b
 
-  multiply = (a, b) =>{
+  multiply = (a, b) => {
     let sum = 0
-    for (let i = 0; i < a; i++){
+    for (let i = 0; i < a; i++) {
       sum = plus(sum, b)
     }
     return sum
@@ -22,57 +22,62 @@
 
   mergeArrays = (a, b) => a.concat(b)
 
-
-  let people=[]
-  people[0] = {
+  let people = [{
     name: "Meg",
     gender: "female",
     movie: "focus"
-  }
-  people[1] = {
+  }, {
     name: "Nik",
     gender: "male",
     movie: "Harry"
-  }
-  people[2] = {
+  }, {
     name: "Emma",
     gender: "female",
     movie: "Project X"
-  }
-  filterFemales = people => people.filter(person => person.gender == "female").map(person => person.name)
+  }]
+  filterFemales = people => people.filter(person => person.gender == "female")
 
   getQuadrant = (x, y) => {
-    if (x>0 && y>0) return("1")
-    if (x<0 && y>0) return("2")
-    if (x<0 && y<0) return("3")
-    if (x>0 && y<0) return("4")
-    if (x==0 && y!=0) return("На оси X")
-    if (y==0 && y!=0) return("На оси Y")
-    if (x==0 && y==0) return("Начало координат")
+    if (x>0 && y>0) return "1"
+    if (x<0 && y>0) return "2"
+    if (x<0 && y<0) return "3"
+    if (x>0 && y<0) return "4"
+    if (x==0 && y!=0) return "На оси X"
+    if (x!=0 && y==0) return "На оси Y"
+    if (x==0 && y==0) return "Начало координат"
   }
 
-  plusAll = (...args) => args.reduce((a, b) => a+b)
+  plusAll = (...args) => args.reduce((a, b) => a + b)
 
-  multiplyAll = (...args) => args.reduce((a, b) => a*b)
+  multiplyAll = (...args) => args.reduce((a, b) => a * b)
 
   objectToQueryString = (obj) => {
-    let get = "?"
-    for (var key in obj){
-      get += encodeURIComponent(key)+'='+encodeURIComponent(obj[key])+"&"
-    }
-    return get.slice(0, -1)
+    return '?'+Object.keys(obj).reduce((a, b) => 
+      a + '&' + encodeURIComponent(b) + '=' + encodeURIComponent(obj[b]), '')
+    .slice(1)
   }
-  console.log(objectToQueryString({ name1: 'John', name2: 'Федор' }))
+  console.log(objectToQueryString({ name1: 'John', name2: 'Федор', name4: 'Федор'}))
 
   const person = {
     address: {
-        street: "Кутузовский проспект"
+
     }
   }
+
+  getOn = (obj, path, def) => {
+    try {
+      const way = path.reduce((subObject, key) => subObject[key], obj)
+
+      if (way != undefined) return way
+       else return def
+    } catch (e) {
+      return def
+    }
+  }
+
+
   getIn = (obj, path, def) => eval('obj'+'.'+path.reduce((a, b) => a+'.'+b)) ? eval('obj'+'.'+path.reduce((a, b) => a+'.'+b)) : def
 
-
-
-  console.log(getIn(person, ['address', 'street'], 'Бомж'));
+  console.log(getOn(person, ['address', 'street'], 'Бомж'));
 </script>
 </html>
