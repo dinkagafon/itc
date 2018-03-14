@@ -67,9 +67,8 @@
   getOn = (obj, path, def) => {
     try {
       const way = path.reduce((subObject, key) => subObject[key], obj)
-
-      if (way) return way
-       else return def
+      
+      way ? way : def
     } catch (e) {
       return def
     }
