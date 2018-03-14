@@ -10,9 +10,9 @@
 
 </body>
 <script>
-  plus = (a, b) => a + b
+  const plus = (a, b) => a + b
 
-  multiply = (a, b) => {
+  const multiply = (a, b) => {
     let sum = 0
     for (let i = 0; i < a; i++) {
       sum = plus(sum, b)
@@ -20,9 +20,9 @@
     return sum
   }
 
-  mergeArrays = (a, b) => a.concat(b)
+  const mergeArrays = (a, b) => a.concat(b)
 
-  let people = [{
+  const people = [{
     name: "Meg",
     gender: "female",
     movie: "focus"
@@ -35,9 +35,9 @@
     gender: "female",
     movie: "Project X"
   }]
-  filterFemales = people => people.filter(person => person.gender == "female")
+  const filterFemales = people => people.filter(person => person.gender == "female")
 
-  getQuadrant = (x, y) => {
+  const getQuadrant = (x, y) => {
     if (x>0 && y>0) return "1"
     if (x<0 && y>0) return "2"
     if (x<0 && y<0) return "3"
@@ -47,9 +47,9 @@
     if (x==0 && y==0) return "Начало координат"
   }
 
-  plusAll = (...args) => args.reduce((a, b) => a + b)
+  const plusAll = (...args) => args.reduce((a, b) => a + b)
 
-  multiplyAll = (...args) => args.reduce((a, b) => a * b)
+  const multiplyAll = (...args) => args.reduce((a, b) => a * b)
 
   objectToQueryString = (obj) => {
     return '?'+Object.keys(obj).reduce((a, b) => 
@@ -68,7 +68,7 @@
     try {
       const way = path.reduce((subObject, key) => subObject[key], obj)
 
-      if (way != undefined) return way
+      if (way) return way
        else return def
     } catch (e) {
       return def
