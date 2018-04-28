@@ -42,21 +42,22 @@ const DeliveryInfo = styled.p`
   font-weight: bold;
 `;
 
-const StoreCard = ({ name, img, minPrice, deliveryPrice, deliveryTime }) => (
+const StoreCard = ({ name, img/*, minPrice, deliveryPrice, deliveryTime*/ }) => (
   <Col lg={3} md={6} sm={12}>
     <Link>
       <Image src={img} />
       <Name>{name}</Name>
-      <OrderInfo>
-        Заказ от
-        <MinPrice> {minPrice}р.</MinPrice>
-      </OrderInfo>
-      <Text>Доставка</Text>
-      <DeliveryInfo>
-        {deliveryPrice ? `${deliveryPrice}р.` : 'бесплатно'}, {deliveryTime} минут
-      </DeliveryInfo>
     </Link>
   </Col>
 );
 
 export default StoreCard;
+//
+/*<OrderInfo>
+  Заказ от
+  <MinPrice> {minPrice}р.</MinPrice>
+</OrderInfo>
+<Text>Доставка</Text>
+<DeliveryInfo>
+  {deliveryPrice ? `${deliveryPrice}р.` : 'бесплатно'}, {deliveryTime} минут
+</DeliveryInfo>*/
