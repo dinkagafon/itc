@@ -42,8 +42,8 @@ const DeliveryInfo = styled.p`
   font-weight: bold;
 `;
 
-const StoreCard = ({ name, img/*, minPrice, deliveryPrice, deliveryTime*/ }) => (
-  <Col lg={3} md={6} sm={12}>
+const StoreCard = ({ name, img, lg/*, minPrice, deliveryPrice, deliveryTime*/ }) => (
+  <Col lg={lg} md={6} sm={12}>
     <Link>
       <Image src={img} />
       <Name>{name}</Name>

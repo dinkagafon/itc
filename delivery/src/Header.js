@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Route, Switch } from "react-router-dom";
 import styled from 'styled-components';
 import Button from './Button';
 import AllHeader from './AllHeader';
@@ -9,6 +10,10 @@ const HeaderMain = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 75px;
+`;
+const HeaderStandart = styled.div`
+  padding-bottom: 45px;
+  border-bottom: 1px solid #ccc
 `;
 
 const LeadHeader1 = styled.span`
@@ -53,11 +58,24 @@ const ButtonAbout = Button.extend`
   margin-top: 128px;
 `;
 
+const StatndartHeader = () => (
+  <HeaderStandart>
+    <Grid>
+      <AllHeader
+        button_text="Вход / Регистрация"
+        clr={0}
+      />
+    </Grid>
+  </HeaderStandart>
+)
 
-const Header = () => (
+const MainHeader = () => (
   <HeaderMain>
     <Grid>
-      <AllHeader button_text="Вход / Регистрация"/>
+      <AllHeader
+          button_text="Вход / Регистрация"
+          logo={1}
+      />
       <Row>
         <Col xs={12}>
           <LeadHeader1>Меняйте баллы</LeadHeader1>
@@ -76,4 +94,15 @@ const Header = () => (
     </Grid>
   </HeaderMain>
 )
+
+const Header = () => (
+  <div>
+    <Switch>
+      <Route exact path="/" component={MainHeader} />
+      <Route path="/stores" component={StatndartHeader} />
+    </Switch>
+  </div>
+)
+
+
 export default Header

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import logo from './img/logowhite.png'
+import { Link } from "react-router-dom";
+import whiteLogo from './img/logowhite.png'
+import blackLogo from './img/logoblack.png'
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -19,7 +21,9 @@ const ButtonHeader = Button.extend`
 const AllHeader = (props) =>(
   <Row center="xs">
     <Col lg={3} center="md">
-      <Logo src={logo} />
+      <Link to="/">
+        {props.logo ? <Logo src={whiteLogo} /> : <Logo src={blackLogo} />}
+      </Link>
     </Col>
     <Col lgOffset={5} />
     <Col lg={3}>
