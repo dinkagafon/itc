@@ -15,11 +15,19 @@ class Store extends Component {
     hasMore: true
   }
   componentDidMount() {
-    fetch("https://itc-web1-server-iwcqwjrbcr.now.sh/stores?limit=" + this.props.elem)
+    fetch("https://itc-web1-server.now.sh/stores?limit=" + this.props.elem)
       .then(res => res.json())
       .then(json => {
         this.setState( {stores: json.payload.stores})
-        this.setState( {loader: 0})
+        this.setState( {hasMore: json.payload.hasMore})
+        this.setState( {loader: false})
+      }).then(() => {
+        fetch("https://itc-web1-server.now.sh/stores?limit=" + this.props.elem + "&offset=" + this.props.elem)
+          .then(res => res.json())
+          .then(json => {
+            this.setState( {next_stores: json.payload.stores})
+            this.setState( {next_hasMore: json.payload.hasMore})
+          })
       })
   }
   render() {
@@ -34,19 +42,30 @@ class Store extends Component {
         <Row around="xs">
           {
               Object.keys(this.state.stores)
-                .map(store => <StoreCard
-                    name={this.state.stores[store]['title']}
-                    key={this.state.stores[store]['uuid']}
-                    img={this.state.stores[store]['heroImageUrl']}
-                    {...this.props}
-                  />
-                )
+                .map(store => {
+                  const categories = Object.keys(this.state.stores[store]['categories']).map(categ => {
+                    return(this.state.stores[store]['categories'][categ]['name'])
+                  })
+                  return(
+                    <StoreCard
+                        name={this.state.stores[store]['title']}
+                        key={this.state.stores[store]['uuid']}
+                        img={this.state.stores[store]['heroImageUrl']}
+                        link={this.state.stores[store]['link']}
+                        priceBucket={this.state.stores[store]['priceBucket']}
+                        categories={categories}
+                        etaRangeMin={this.state.stores[store]['etaRange']['min']}
+                        etaRangeMax={this.state.stores[store]['etaRange']['max']}
+                        sellsAlcohol={this.state.stores[store]['sellsAlcohol']}
+                        {...this.props}
+                      />
+                  )
+                })
           }
         </Row>
-        {this.state.loader ? <div className="loader">Loading...</div> : ""}
         <Row center="xs">
           <Col lg={12} md={12} sm={12} xs={12}>
-            { this.state.hasMore && <ButtonAdd addStores={this.addStores}/>}
+            { this.state.hasMore && <ButtonAdd addStores={this.addStores} loader={this.state.loader}/> }
           </Col>
         </Row>
       </Grid>
@@ -54,13 +73,13 @@ class Store extends Component {
   }
 
   addStores = () => {
-    this.setState( {loader: 1})
-    fetch("https://itc-web1-server.now.sh/stores?limit=" + this.props.elem + "&offset=" + this.state.stores.length)
+    this.setState( {stores: this.state.stores.concat(this.state.next_stores)})
+    this.setState( {hasMore: this.state.next_hasMore })
+    fetch("https://itc-web1-server.now.sh/stores?limit=" + this.props.elem + "&offset=" + (this.state.stores.length + this.props.elem))
       .then(res => res.json())
       .then(json => {
-        this.setState( {stores: this.state.stores.concat(json.payload.stores) })
-        this.setState( {hasMore: json.payload.hasMore })
-        this.setState( {loader: 0})
+        this.setState( {next_stores: json.payload.stores})
+        this.setState( {next_hasMore: json.payload.hasMore })
       })
   }
 }

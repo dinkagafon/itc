@@ -19,13 +19,13 @@ const ButtonHeader = Button.extend`
 `;
 
 const AllHeader = (props) =>(
-  <Row center="xs">
-    <Col lg={3} center="md">
+  <Row center="xs" between="lg">
+    <Col lg={1}>
       <Link to="/">
         {props.logo ? <Logo src={whiteLogo} /> : <Logo src={blackLogo} />}
       </Link>
     </Col>
-    <Col lgOffset={5} />
+    <Col lgOffset={6} />
     <Col lg={3}>
       <ButtonHeader>{props.button_text}</ButtonHeader>
     </Col>
