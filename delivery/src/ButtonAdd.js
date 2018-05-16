@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Link, Switch } from "react-router-dom";
 import Button from './Button';
 
-const LinkStores = () => (
-  <Link to="/stores"><Button>Все рестораны</Button></Link>
-)
-
 const ButtonAdd = (props) => (
   <Switch>
-    <Route exact path="/" component={LinkStores} />
+    <Route exact path="/" render={() => (
+        <Link to="/stores">
+          <Button>{props.loader ? "Загрузка.." : "Все рестораны"}</Button>
+        </Link>
+      )} />
     <Route path="/stores" render={() => (
         <Button onClick={props.addStores}>
-          Добавить рестораны
+            {props.loader ? "Загрузка.." : "Добавить рестораны"}
         </Button>
       )} />
     </Switch>

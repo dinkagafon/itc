@@ -7,11 +7,11 @@ const Link = styled.a`
   margin-bottom: 48px;
   text-decoration: inherit;
   color: inherit;
+  cursor: pointer;
 `;
 
 const Image = styled.img`
   width: 100%;
-  border-radius: 16px;
 `;
 
 const Name = styled.h2`
@@ -21,6 +21,7 @@ const Name = styled.h2`
   line-height: 32px;
   text-align: left;
   color: #333333;
+
 `;
 
 const OrderInfo = styled.p`
@@ -42,11 +43,78 @@ const DeliveryInfo = styled.p`
   font-weight: bold;
 `;
 
-const StoreCard = ({ name, img, lg/*, minPrice, deliveryPrice, deliveryTime*/ }) => (
+const Categories = styled.p`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: left;
+  color: #333333;
+  margin: 0;
+`;
+
+const NameBlock = styled.div`
+  height: 100px;
+`;
+
+const PriceBucket = styled.div`
+  font-style: normal;
+  font-weight: normal;
+  line-height: 32px;
+  font-size: 20px;
+  text-align: center;
+  width: 25%;
+  height: 32px;
+  background: #DBDBDB;
+  border-radius: 16px;
+  color: #333;
+  margin-top: 15px;
+`;
+
+const TimeDel = styled.div`
+  width: 55%;
+  height: 32px;
+  background: #DBDBDB;
+  border-radius: 16px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 32px;
+  font-size: 18px;
+  text-align: center;
+  color: #333;
+  margin-right: 170px;
+  float: right;
+  margin-right: 10px;
+  margin-top: 15px;
+`;
+
+const SellsAlcohol = styled.div`
+  width: 121px;
+  height: 32px;
+  background: #DBDBDB;
+  border-radius: 16px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 32px;
+  font-size: 18px;
+  text-align: center;
+  color: #333;
+  margin-top: 10px;
+`;
+const StoreCard = ({ name, img, lg, priceBucket, categories, etaRangeMin, etaRangeMax, sellsAlcohol/*, minPrice, deliveryPrice, deliveryTime*/ }) => (
   <Col lg={lg} md={6} sm={12}>
     <Link>
       <Image src={img} />
-      <Name>{name}</Name>
+      <NameBlock>
+        <Name>{name}</Name>
+        <Categories>{categories.join(', ')}</Categories>
+      </NameBlock>
+      <TimeDel>
+        {etaRangeMin + " - " + etaRangeMax + " минут"}
+      </TimeDel>
+      <PriceBucket>
+        {priceBucket}
+      </PriceBucket>
+      {sellsAlcohol && <SellsAlcohol>Алкоголь</SellsAlcohol>}
     </Link>
   </Col>
 );
